@@ -1,5 +1,5 @@
 # 使用官方 Node.js 镜像作为基础镜像
-FROM node:14-alpine
+FROM node:18-alpine
 
 # 创建并设置工作目录
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
