@@ -6,7 +6,7 @@ const number = require('lib0/number')
 const wss = new WebSocket.Server({ noServer: true })
 const setupWSConnection = require('./utils.cjs').setupWSConnection
 
-const host = process.env.HOST || 'localhost'
+const host = process.env.HOST || '0.0.0.0'
 const port = number.parseInt(process.env.PORT || '80')
 
 const server = http.createServer((_request, response) => {

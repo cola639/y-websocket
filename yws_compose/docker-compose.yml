@@ -1,17 +1,31 @@
-version: '3.8' # 指定使用 Docker Compose 版本 3.8
+version: '3.8'
 
 services:
   nginx:
-    image: nginx:1.22 # 使用 .env 文件中定义的 NGINX_IMAGE 环境变量指定镜像
-    container_name: nginx-y-websocket # 容器名称，这里固定为 nginx-proxy
+    image: nginx:1.22
+    container_name: nginx-y-websocket
     volumes:
-      - ./y-websocket.conf:/etc/nginx/nginx.conf:ro # 使用相对路径
+      - ./y-websocket.conf:/etc/nginx/nginx.conf:ro
     networks:
-      - y-websocket # 同样将 Nginx 容器加入到定义的网络
+      - yws
+    ports:
+      - '1235:80' # 将宿主机的 1235 端口映射到 Nginx 容器的 80 端口
+
+  y-websocket:
+    image: y-websocket:latest
+    container_name: y-websocket
+    networks:
+      - yws
+    environment:
+      - HOST=0.0.0.0
+      - PORT=80
 
 networks:
-  y-websocket: # 网络定义，使用 .env 文件中的 NETWORK_NAME 环境变量
-    driver: bridge # 网络驱动模式设置为桥接，适用于同一宿主机上的容器通信
-
-# docker network create ${NETWORK_NAME}
-# docker network connect ${NETWORK_NAME} y-websocket
+  yws:
+    name: yws
+    driver: bridge
+# docker network create yws
+# docker network connect yws y-websocket
+# docker network inspect yws
+# docker network connect yws nginx-y-websocket
+# curl http://<宿主机IP>:1235

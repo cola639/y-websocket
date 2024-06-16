@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 网络名称
-NETWORK_NAME="y-websocket"  # 根据实际情况修改网络名称
+NETWORK_NAME="yws"  # 根据实际情况修改网络名称
 
 # 容器名称
 CONTAINER_NAME="y-websocket"  # 根据实际情况修改容器名称
