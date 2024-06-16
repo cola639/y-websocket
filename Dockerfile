@@ -1,10 +1,20 @@
-FROM node:12-alpine
+# 使用官方 Node.js 镜像作为基础镜像
+FROM node:14-alpine
 
+# 创建并设置工作目录
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
+
+# 复制 package.json 和 package-lock.json 并安装依赖
 COPY package*.json ./
 USER node
 RUN npm install
+
+# 复制项目文件并设置权限
 COPY --chown=node:node . .
-EXPOSE 1234
-CMD [ "npm", "dev" ]
+
+# 暴露应用程序端口
+EXPOSE 1235
+
+# 启动应用程序
+CMD ["npm", "run", "dev"]
