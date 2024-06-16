@@ -8,7 +8,7 @@ WORKDIR /home/node/app
 # 复制 package.json 和 package-lock.json 并安装依赖
 COPY package*.json ./
 USER root
-RUN npm install && npm install -g pm2
+RUN npm install
 
 # 切换到非 root 用户
 USER node
