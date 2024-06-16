@@ -20,7 +20,7 @@ pipeline {
       steps {
         script {
           // 停止并移除之前运行的容器
-          sh 'docker rm -f ${IMAGE_NAME} || true '
+          sh 'docker rm -f ${DOCKER_IMAGE} || true '
           // 运行新的容器
           docker.image(DOCKER_IMAGE).run("-d -p 1235:1235 --name ${DOCKER_CONTAINER_NAME}")
         }
