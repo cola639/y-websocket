@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # 使用 PM2 启动应用程序
-CMD ["pm2-runtime", "start", "ecosystem.config.js"]
+CMD ["pm2-runtime", "start", "ecosystem.config.cjs"]
