@@ -11,21 +11,23 @@ services:
     ports:
       - '1235:80' # 将宿主机的 1235 端口映射到 Nginx 容器的 80 端口
 
-  y-websocket:
-    image: y-websocket:latest
-    container_name: y-websocket
-    networks:
-      - yws
-    environment:
-      - HOST=0.0.0.0
-      - PORT=80
+  # y-websocket:
+  #   image: y-websocket:latest
+  #   container_name: y-websocket
+  #   networks:
+  #     - yws
+  #   environment:
+  #     - HOST=0.0.0.0
+  #     - PORT=80
 
 networks:
   yws:
-    name: yws
-    driver: bridge
+    external: true
 # docker network create yws
 # docker network connect yws y-websocket
 # docker network inspect yws
 # docker network connect yws nginx-y-websocket
 # curl http://<宿主机IP>:1235
+# docker-compose down
+# docker-compose up -d
+# networks:

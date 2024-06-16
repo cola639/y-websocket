@@ -23,7 +23,7 @@ pipeline {
           sh "docker rm -f ${DOCKER_CONTAINER_NAME} || true"
 
           // 运行新的容器并指定网络
-          docker.image(DOCKER_IMAGE).run("-d -p 1235:80 --name ${DOCKER_CONTAINER_NAME}")
+          docker.image(DOCKER_IMAGE).run("-d -p 80 --name ${DOCKER_CONTAINER_NAME}")
         }
       }
         }
