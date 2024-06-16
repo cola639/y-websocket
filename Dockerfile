@@ -1,8 +1,6 @@
 # 使用官方 Node.js 镜像作为基础镜像
 FROM node:18-alpine
 
-FROM nginx:1.22
-
 # 创建并设置工作目录
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
@@ -14,6 +12,7 @@ RUN npm install && npm install -g pm2
 
 # 切换到非 root 用户
 USER node
+
 # 复制项目文件并设置权限
 COPY --chown=node:node . .
 
