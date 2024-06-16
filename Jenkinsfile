@@ -21,8 +21,11 @@ pipeline {
         script {
           // 停止并移除之前运行的容器
           sh 'docker rm -f ${DOCKER_IMAGE} || true '
-          // 运行新的容器
-          docker.image(DOCKER_IMAGE).run("-d -p 1235:1235 --name ${DOCKER_CONTAINER_NAME}")
+
+          // 运行新的容器，挂载 Nginx 配置文件
+          def runCommand = "docker run -d -p 1235:80 --name ${DOCKER_CONTAINER_NAME} -v /www/docker/${NGINX_CONF_DIR}/${NGINX_CONF_FILE}:/etc/nginx/nginx.conf ${DOCKER_IMAGE}"
+          echo "Running: ${runCommand}"
+          sh runCommand
         }
       }
         }

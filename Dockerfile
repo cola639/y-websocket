@@ -1,6 +1,8 @@
 # 使用官方 Node.js 镜像作为基础镜像
 FROM node:18-alpine
 
+FROM nginx:1.22
+
 # 创建并设置工作目录
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
@@ -16,7 +18,7 @@ USER node
 COPY --chown=node:node . .
 
 # 暴露应用程序端口
-EXPOSE 1235
+EXPOSE 80
 
 # 启动应用程序
 CMD ["npm", "run", "dev"]
