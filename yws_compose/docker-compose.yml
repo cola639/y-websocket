@@ -1,0 +1,17 @@
+version: '3.8' # 指定使用 Docker Compose 版本 3.8
+
+services:
+  nginx:
+    image: nginx:1.22 # 使用 .env 文件中定义的 NGINX_IMAGE 环境变量指定镜像
+    container_name: nginx-y-websocket # 容器名称，这里固定为 nginx-proxy
+    volumes:
+      - ./y-websocket.conf:/etc/nginx/nginx.conf:ro # 使用相对路径
+    networks:
+      - y-websocket # 同样将 Nginx 容器加入到定义的网络
+
+networks:
+  y-websocket: # 网络定义，使用 .env 文件中的 NETWORK_NAME 环境变量
+    driver: bridge # 网络驱动模式设置为桥接，适用于同一宿主机上的容器通信
+
+# docker network create ${NETWORK_NAME}
+# docker network connect ${NETWORK_NAME} y-websocket

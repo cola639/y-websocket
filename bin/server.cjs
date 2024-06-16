@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 
-const WebSocket = require("ws")
-const http = require("http")
-const number = require("lib0/number")
+const WebSocket = require('ws')
+const http = require('http')
+const number = require('lib0/number')
 const wss = new WebSocket.Server({ noServer: true })
-const setupWSConnection = require("./utils.cjs").setupWSConnection
+const setupWSConnection = require('./utils.cjs').setupWSConnection
 
-const host = process.env.HOST || "localhost"
-const port = number.parseInt(process.env.PORT || "1235")
+const host = process.env.HOST || 'localhost'
+const port = number.parseInt(process.env.PORT || '80')
 
 const server = http.createServer((_request, response) => {
-  response.writeHead(200, { "Content-Type": "text/plain" })
-  response.end("okay")
+  response.writeHead(200, { 'Content-Type': 'text/plain' })
+  response.end('okay')
 })
 
-wss.on("connection", setupWSConnection)
+wss.on('connection', setupWSConnection)
 
-server.on("upgrade", (request, socket, head) => {
+server.on('upgrade', (request, socket, head) => {
   // You may check auth of request here..
   // Call `wss.HandleUpgrade` *after* you checked whether the client has access
   // (e.g. by checking cookies, or url parameters).
@@ -25,8 +25,8 @@ server.on("upgrade", (request, socket, head) => {
     request,
     socket,
     head,
-    /** @param {any} ws */ (ws) => {
-      wss.emit("connection", ws, request)
+    /** @param {any} ws */ ws => {
+      wss.emit('connection', ws, request)
     }
   )
 })
