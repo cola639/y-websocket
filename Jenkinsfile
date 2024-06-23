@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'y-websocket'
         DOCKER_CONTAINER_NAME = 'y-websocket'
-        NETWORK = 'app-network'  // 定义网络名
+        DOCKER_NETWORK = 'yws'
     }
 
     stages {
@@ -19,11 +19,18 @@ pipeline {
         stage('Deploy') {
       steps {
         script {
-          // 停止并移除之前运行的容器
-          sh "docker rm -f ${DOCKER_CONTAINER_NAME} || true"
+                    // 停止并移除之前运行的容器
+                    sh "docker rm -f ${DOCKER_CONTAINER_NAME} || true"
 
-          // 运行新的容器并指定网络
-          docker.image(DOCKER_IMAGE).run("-d -p 80 --name ${DOCKER_CONTAINER_NAME}")
+                    // 检查网络是否存在
+                    def networkExists = sh(script: "docker network ls | grep -w ${DOCKER_NETWORK}", returnStatus: true) == 0
+
+                    // 运行新的容器并指定网络（如果网络存在）
+                    if (networkExists) {
+                        sh "docker run -d -p 80 --name ${DOCKER_CONTAINER_NAME} --network ${DOCKER_NETWORK} ${DOCKER_IMAGE}"
+                    } else {
+                        sh "docker run -d -p 80 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE}"
+                    }
         }
       }
         }
