@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
+        DOCKER_NETWORK = 'ruoyi'      
         DOCKER_IMAGE = 'y-websocket'
         DOCKER_CONTAINER_NAME = 'y-websocket'
-        DOCKER_NETWORK = 'yws'
     }
 
     stages {
