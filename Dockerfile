@@ -17,7 +17,8 @@ USER node
 COPY --chown=node:node . .
 
 # 暴露应用程序端口
-EXPOSE 80
+EXPOSE 80 1235
 
 # 启动应用程序
 CMD ["npm", "run", "dev"]
+
